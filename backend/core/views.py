@@ -23,6 +23,9 @@ class FarmerStackViewSet(viewsets.ModelViewSet):
     serializer_class = FarmerStackSerializer
     permission_classes = [FarmerStackPermission]
 
+    def perform_create(self, serializer):
+        serializer.save(user_id=self.request.user)
+
 class RegionViewSet(viewsets.ModelViewSet):
     queryset = Region.objects.all()
     serializer_class = RegionSerializer
