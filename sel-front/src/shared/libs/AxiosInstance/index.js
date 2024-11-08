@@ -3,7 +3,12 @@ import { toast } from 'react-toastify';
 import config from 'shared/config/config';
 
 const axiosInstance = axios.create({
-  baseURL: config.BASE_URL
+  baseURL: config.BASE_URL,
+  withCredentials: true,
+  headers: {
+    'Access-Control-Allow-Origin': '*',
+
+  }
 });
 
 axiosInstance.interceptors.request.use(async (config) => {

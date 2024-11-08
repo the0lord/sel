@@ -7,7 +7,7 @@ const initialState = {
 }
 
 export const loginThunk = createAsyncThunk("auth", async (body, { rejectWithValue }) => {
-    const api = "auth/v1/user/login";
+    const api = "auth/jwt/create";
     try {
         const data = await axiosInstance.post(api, body);
         return data?.data?.access_token;

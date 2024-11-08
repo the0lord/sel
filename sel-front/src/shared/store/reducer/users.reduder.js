@@ -12,7 +12,7 @@ export const fetchUsersThunk = createAsyncThunk(
     "users/fetchUsers",
     async (params = { page: 1, pageSize: 10 }, { rejectWithValue }) => {
         const { page, pageSize } = params;
-        const api = `/auth/jwt/list?page=${page}&page_size=${pageSize}`;
+        const api = `/auth/users?page=${page}&page_size=${pageSize}`;
         try {
             const response = await axiosInstance.get(api);
             return response.data;
@@ -38,39 +38,37 @@ export const createUserThunk = createAsyncThunk("users/createUser", async (body,
 
 
 
-const whiteListSlice = createSlice({
+const usersSlice = createSlice({
     name: "users",
     initialState,
     reducers: {},
     extraReducers: (builder) => {
         // Fetching Products
         builder
-            .addCase(fetchProductsThunk.fulfilled, (state, action) => {
+            .addCase(fetchUsersThunk.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.persons = action.payload.data;
+                state.users = action.payload.data;
                 state.total = action.payload.total;
             })
-            .addCase(fetchProductsThunk.pending, (state) => {
+            .addCase(fetchUsersThunk.pending, (state) => {
                 state.isLoading = true;
                 state.error = null;
             })
-            .addCase(fetchProductsThunk.rejected, (state, action) => {
+            .addCase(fetchUsersThunk.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
 
             });
         // Fetching Organizations
         builder
-            .addCase(createProductThunk.fulfilled, (state, action) => {
+            .addCase(createUserThunk.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.organizations = action.payload.data;
-                state.total = action.payload.total;
             })
-            .addCase(createProductThunk.pending, (state) => {
+            .addCase(createUserThunk.pending, (state) => {
                 state.isLoading = true;
                 state.error = null;
             })
-            .addCase(createProductThunk.rejected, (state, action) => {
+            .addCase(createUserThunk.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
             });
@@ -78,5 +76,5 @@ const whiteListSlice = createSlice({
     },
 });
 
-export default whiteListSlice;
+export default usersSlice;
 
