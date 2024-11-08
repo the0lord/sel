@@ -11,10 +11,9 @@ const UsersList = () => {
     }, []);
 
     const columns = [
-        { field: 'ID', headerName: '#', width: 50 },
-        { field: 'Name', headerName: 'Имя', width: 150 },
-        { field: 'Role', headerName: 'Роль', width: 150 },
-
+        { field: 'id', headerName: '#', width: 50 },
+        { field: 'username', headerName: 'Имя', width: 150 },
+        // { field: 'Role', headerName: 'Роль', width: 150 },
     ]
 
 
