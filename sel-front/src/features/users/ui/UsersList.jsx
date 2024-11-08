@@ -9,11 +9,11 @@ const UsersList = () => {
     useEffect(() => {
         dispatch(fetchUsersThunk());
     }, []);
-
+    console.log(users);
     const columns = [
         { field: 'id', headerName: '#', width: 50 },
         { field: 'username', headerName: 'Имя', width: 150 },
-        // { field: 'Role', headerName: 'Роль', width: 150 },
+        { field: 'role', headerName: 'Роль', width: 150 },
     ]
 
 
