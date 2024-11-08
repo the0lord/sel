@@ -10,6 +10,7 @@ class ProductViewSet(viewsets.ModelViewSet):
 class NeedListViewSet(viewsets.ModelViewSet):
     queryset = NeedList.objects.all()
     serializer_class = NeedListSerializer
+    permission_classes = [IsAdminOrReadOnly]
 
 class FarmerStackViewSet(viewsets.ModelViewSet):
     queryset = FarmerStack.objects.all()
