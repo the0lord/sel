@@ -2,12 +2,19 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import config from 'shared/config/config';
 
+function getCSRFToken() {
+  const cookieValue = document.cookie
+    .split('; ')
+    .find(row => row.startsWith('csrftoken'))
+    ?.split('=')[1];
+  return cookieValue;
+}
 const axiosInstance = axios.create({
   baseURL: config.BASE_URL,
   withCredentials: true,
   headers: {
     'Access-Control-Allow-Origin': '*',
-
+    'X-CSRFToken': getCSRFToken()
   }
 });
 

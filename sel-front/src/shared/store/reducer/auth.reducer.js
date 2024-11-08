@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axiosInstance from "shared/libs/AxiosInstance";
+import request from "shared/libs/client";
 const initialState = {
     token: null,
     isLoading: false,
@@ -9,8 +9,8 @@ const initialState = {
 export const loginThunk = createAsyncThunk("auth", async (body, { rejectWithValue }) => {
     const api = "auth/jwt/create";
     try {
-        const data = await axiosInstance.post(api, body);
-        return data?.data?.access_token;
+        const data = await request(api, { body });
+        return data?.access;
     } catch (error) {
         if (!error.response) {
             throw error

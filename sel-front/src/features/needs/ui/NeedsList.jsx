@@ -1,29 +1,23 @@
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchNeedsThunk } from 'shared/store/reducer/needs.reducer';
 import Table from "shared/ui/dynamic/Table/Table";
-
-
 const NeedsList = () => {
-    // const dispatch = useDispatch();
-    // const { foundOrganizations, isLoading, error, total } = useSelector(state => state.found);
-    const needs = [
-        {
-            ID: 1,
-            Name: "hi",
-            UnitOfMeasure: "kg",
-            Amount: 10
-        }
-    ]
+    const { needs } = useSelector(({ needs }) => needs);
+    const dispatch = useDispatch();
 
-    // const loadPage = (page, pageSize) => {
-    //     dispatch(getOrganizations({ page, pageSize }));
-    // };
+    useEffect(() => {
+        dispatch(fetchNeedsThunk());
+    }, []);
 
     const columns = [
-        { field: 'ID', headerName: '#', width: 50 },
+        { field: 'id', headerName: '#', width: 50 },
         { field: 'Name', headerName: 'Название культуры', width: 150 },
         { field: 'UnitOfMeasure', headerName: 'Единица измерения', width: 150 },
         { field: 'Amount', headerName: 'Количество', width: 50 },
-    ];
+    ]
+
+
 
     return <Table
         data={needs}
@@ -32,6 +26,6 @@ const NeedsList = () => {
         total={2}
         loadPage={(page, pageSize) => { }}
     />;
-}
+};
 
 export default NeedsList;

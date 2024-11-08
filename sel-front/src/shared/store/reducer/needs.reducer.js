@@ -3,17 +3,17 @@ import axiosInstance from "shared/libs/AxiosInstance";
 import request from "shared/libs/client";
 
 const initialState = {
-    products: [],
+    needs: [],
     error: null,
     isLoading: false,
     total: 0,
 };
 
-export const fetchProductsThunk = createAsyncThunk(
-    "products/fetchProducts",
+export const fetchNeedsThunk = createAsyncThunk(
+    "needs/fetchNeeds",
     async (params = { page: 1, pageSize: 10 }, { rejectWithValue }) => {
         const { page, pageSize } = params;
-        const api = `/products?page=${page}&page_size=${pageSize}`;
+        const api = `/needs?page=${page}&page_size=${pageSize}`;
         try {
             const response = await request(api);
             return response;
@@ -25,8 +25,8 @@ export const fetchProductsThunk = createAsyncThunk(
         }
     }
 );
-export const createProductThunk = createAsyncThunk("products/createProduct", async (body, { rejectWithValue }) => {
-    const api = "products";
+export const createNeedThunk = createAsyncThunk("needs/createNeed", async (body, { rejectWithValue }) => {
+    const api = "needs";
     try {
         await request(api, { body });
     } catch (error) {
@@ -39,38 +39,38 @@ export const createProductThunk = createAsyncThunk("products/createProduct", asy
 
 
 
-const productsSlice = createSlice({
-    name: "products",
+const needsSlice = createSlice({
+    name: "needs",
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        // Fetching Products
+        // Fetching Needs
         builder
-            .addCase(fetchProductsThunk.fulfilled, (state, action) => {
+            .addCase(fetchNeedsThunk.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.products = action.payload.results;
+                state.needs = action.payload.results;
                 state.total = action.payload.count;
             })
-            .addCase(fetchProductsThunk.pending, (state) => {
+            .addCase(fetchNeedsThunk.pending, (state) => {
                 state.isLoading = true;
                 state.error = null;
             })
-            .addCase(fetchProductsThunk.rejected, (state, action) => {
+            .addCase(fetchNeedsThunk.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
 
             });
         // Fetching Organizations
         builder
-            .addCase(createProductThunk.fulfilled, (state, action) => {
+            .addCase(createNeedThunk.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.total = action.payload.total;
             })
-            .addCase(createProductThunk.pending, (state) => {
+            .addCase(createNeedThunk.pending, (state) => {
                 state.isLoading = true;
                 state.error = null;
             })
-            .addCase(createProductThunk.rejected, (state, action) => {
+            .addCase(createNeedThunk.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
             });
@@ -78,5 +78,5 @@ const productsSlice = createSlice({
     },
 });
 
-export default productsSlice;
+export default needsSlice;
 
