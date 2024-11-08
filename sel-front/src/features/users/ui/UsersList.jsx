@@ -10,7 +10,6 @@ const UsersList = () => {
     useEffect(() => {
         dispatch(fetchUsersThunk());
     }, []);
-    console.log(users);
     const columns = [
         { field: 'id', headerName: '#', width: 50 },
         { field: 'username', headerName: 'Имя', width: 150 },

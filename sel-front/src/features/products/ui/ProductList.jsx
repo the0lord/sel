@@ -4,7 +4,6 @@ import { fetchProductsThunk } from 'shared/store/reducer/products.reduder';
 import Table from "shared/ui/dynamic/Table/Table";
 const ProductList = () => {
     const { products } = useSelector(({ products }) => products);
-    console.log(products)
     const dispatch = useDispatch();
 
     useEffect(() => {
