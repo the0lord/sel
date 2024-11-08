@@ -11,10 +11,11 @@ const NeedsList = () => {
     }, []);
 
     const columns = [
-        { field: 'id', headerName: '#', width: 50 },
-        { field: 'Name', headerName: 'Название культуры', width: 150 },
-        { field: 'UnitOfMeasure', headerName: 'Единица измерения', width: 150 },
-        { field: 'Amount', headerName: 'Количество', width: 50 },
+        { field: 'quantity', headerName: 'Количество', width: 50 },
+        { field: 'start_date', headerName: 'Начальная дата', width: 150},
+        { field: 'end_date', headerName: 'Конечная дата', width: 150 },
+        { field: 'name', headerName: 'Название культуры', width: 150 },
+        { field: 'measurement_unit', headerName: 'Единица измерения', width: 150 },
     ]
 
 
