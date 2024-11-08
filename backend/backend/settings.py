@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'authentication',
     'rest_framework',
     'djoser',
-    'corsheaders'
+    'corsheaders',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
