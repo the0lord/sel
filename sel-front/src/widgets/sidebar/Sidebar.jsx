@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import SidebarItem from './SidebarItem';
-import { ChartBarSquareIcon, HomeIcon, DocumentTextIcon, Bars3Icon } from "@heroicons/react/24/solid";
+import { ChartBarSquareIcon, HomeIcon, DocumentTextIcon, Bars3Icon, ArchiveBoxArrowDownIcon } from "@heroicons/react/24/solid";
+
 import { UserIcon } from "@heroicons/react/24/outline";
-import sideBarBtn from '../../../images/sideBarButton.svg';
+import sideBarBtn from 'assets/images/sideBarButton.svg';
+import hamburgerIcon from "assets/images/hamburger.png";
+
 
 const Sidebar = ({ children }) => {
     const [open, setOpen] = useState(window.innerWidth > 850);
@@ -36,37 +39,41 @@ const Sidebar = ({ children }) => {
             link: '/'
         },
         {
-            icon: <ChartBarSquareIcon className='h-5 w-5 font-bold' />,
-            label: 'Санкции',
-            link: '/sanctions'
-        },
-        {
-            icon: <UserIcon className='h-5 w-5 font-bold' />,
-            label: 'Белый список',
-            link: '/white-list'
-        },
-        {
-            icon: <DocumentTextIcon className='h-5 w-5 font-bold' />,
-            label: 'Найденные',
-            link: '/login'
-        },
-        {
-            icon: <DocumentTextIcon className='h-5 w-5 font-bold' />,
-            label: 'Логги',
-            link: '/loggi'
-        },
+            icon: <ArchiveBoxArrowDownIcon className='h-5 w-5 font-bold' />,
+            label: 'Продукты',
+            link: '/products'
+        }
+        // {
+        //     icon: <ChartBarSquareIcon className='h-5 w-5 font-bold' />,
+        //     label: 'Санкции',
+        //     link: '/sanctions'
+        // },
+        // {
+        //     icon: <UserIcon className='h-5 w-5 font-bold' />,
+        //     label: 'Белый список',
+        //     link: '/white-list'
+        // },
+        // {
+        //     icon: <DocumentTextIcon className='h-5 w-5 font-bold' />,
+        //     label: 'Найденные',
+        //     link: '/login'
+        // },
+        // {
+        //     icon: <DocumentTextIcon className='h-5 w-5 font-bold' />,
+        //     label: 'Логги',
+        //     link: '/loggi'
+        // },
     ];
 
     return (
         <div className="flex justify-center relative max-w-full">
             {buttonVisible && (
                 <div className='h-[100vh]'>
-
                     <button
                         className=" text-black focus:outline-none cursor-pointer  w-12 h-12  max-md:inline"
                         onClick={handleClick}
                     >
-                        <img src="../../../images/hamburger.png" alt="menu" />
+                        <img src={hamburgerIcon} alt="menu" />
                     </button>
                 </div>
             )}
