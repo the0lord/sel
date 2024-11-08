@@ -9,6 +9,7 @@ export const store = configureStore({
     reducer: {
         auth: authSlice.reducer,
         users: usersSlice.reducer,
+        
         products: productsSlice.reducer,
         needs: needsSlice.reducer,
         stack: stackSlice.reducer,
