@@ -1,19 +1,19 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import BaseLayout from "widgets/layouts/BaseLayout";
 import { HomePage } from "./home";
-import { FarmerStackPage } from './farmerStack'
-import { ProductsPage } from "./products";
-import { NeedsPage } from "./needs";
+import StacksRouter from './farmerStack'
+import ProductsRouter from "./products";
+import NeedsRouter  from "./needs";
 import UsersRouter from "./users";
 
 const Router = () => {
     return <BaseLayout>
         <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/products" element={<ProductsPage />} />
+            <Route path="/products/*" element={<ProductsRouter />} />
             <Route path="/users/*" element={<UsersRouter />}/>
-            <Route path="/stack"element={<FarmerStackPage/>}/>
-            <Route path="/needs" element={<NeedsPage />} />
+            <Route path="/stack/*"element={<StacksRouter/>}/>
+            <Route path="/needs/*" element={<NeedsRouter />} />
             <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
     </BaseLayout>

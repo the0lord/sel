@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUsersThunk } from 'shared/store/reducer/users.reduder';
 import Table from "shared/ui/dynamic/Table/Table";
+
 const UsersList = () => {
     const { users } = useSelector(({ users }) => users);
     const dispatch = useDispatch();
@@ -9,7 +10,6 @@ const UsersList = () => {
     useEffect(() => {
         dispatch(fetchUsersThunk());
     }, []);
-    console.log(users);
     const columns = [
         { field: 'id', headerName: '#', width: 50 },
         { field: 'username', headerName: 'Имя', width: 150 },

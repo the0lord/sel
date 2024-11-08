@@ -1,4 +1,5 @@
-import UsersList from 'features/users/ui/UsersList'; import React from 'react';
+import UsersList from 'features/Users/ui/UsersList';
+import React from 'react';
 import Tw from "shared/ui/dynamic/Tailwind/Tw";
 
 const  UsersPage= () => {
