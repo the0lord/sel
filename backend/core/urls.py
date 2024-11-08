@@ -1,6 +1,12 @@
-from django.urls import path
-from .views import api_home
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import ProductViewSet, NeedListViewSet, FarmerStackViewSet
+
+router = DefaultRouter()
+router.register(r'products', ProductViewSet)
+router.register(r'needlists', NeedListViewSet)
+router.register(r'farmerstacks', FarmerStackViewSet)
 
 urlpatterns = [
-    path('', api_home)
+    path('', include(router.urls)),
 ]
