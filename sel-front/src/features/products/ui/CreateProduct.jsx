@@ -1,13 +1,14 @@
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { createProductThunk } from "shared/store/reducer/products.reducer";
 // import { createProductThunk } from "shared/store/reducer/products.reducer";
 
 const CreateProduct = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const dispatch = useDispatch();
     const onSubmit = (data) => {
-        // dispatch(createProductThunk(data));
+        dispatch(createProductThunk(data));
     };
     const navigate = useNavigate();
     
@@ -38,11 +39,11 @@ const CreateProduct = () => {
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Unit of Measure</label>
                     <input
-                        {...register("unitOfMeasure", { required: "Unit of measure is required" })}
+                        {...register("measurement_unit", { required: "Unit of measure is required" })}
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                         type="text"
                     />
-                    {errors.unitOfMeasure && <span className="text-red-500 text-sm">{errors.unitOfMeasure.message}</span>}
+                    {errors.measurement_unit && <span className="text-red-500 text-sm">{errors.measurement_unit.message}</span>}
                 </div>
 
                 <button

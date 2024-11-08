@@ -13,7 +13,7 @@ export const fetchNeedsThunk = createAsyncThunk(
     "needs/fetchNeeds",
     async (params = { page: 1, pageSize: 10 }, { rejectWithValue }) => {
         const { page, pageSize } = params;
-        const api = `/needs?page=${page}&page_size=${pageSize}`;
+        const api = `/needlists?page=${page}&page_size=${pageSize}`;
         try {
             const response = await request(api);
             return response;
@@ -26,7 +26,7 @@ export const fetchNeedsThunk = createAsyncThunk(
     }
 );
 export const createNeedThunk = createAsyncThunk("needs/createNeed", async (body, { rejectWithValue }) => {
-    const api = "needs";
+    const api = "needlists/";
     try {
         await request(api, { body });
     } catch (error) {

@@ -1,4 +1,4 @@
-import { UsersList } from 'features/Users';
+import { UsersList } from 'features/users';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Tw from "shared/ui/dynamic/Tailwind/Tw";

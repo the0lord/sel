@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { createNeedThunk } from "shared/store/reducer/needs.reducer";
+import { fetchProductsThunk } from "shared/store/reducer/products.reducer";
 import { fetchRegionsThunk } from "shared/store/reducer/region.reducer";
 
 const CreateNeed = () => {
@@ -14,8 +15,7 @@ const CreateNeed = () => {
 
     useEffect(() => {
         dispatch(fetchRegionsThunk());
-        // Fetch products if not already loaded
-        // dispatch(fetchProductsThunk()); 
+        dispatch(fetchProductsThunk());
     }, [dispatch]);
 
     const onSubmit = (data) => {
@@ -38,7 +38,7 @@ const CreateNeed = () => {
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Region</label>
                     <select
-                        {...register("regionId", { required: "Region is required" })}
+                        {...register("region", { required: "Region is required" })}
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                     >
                         <option value="">Select a region</option>
@@ -54,7 +54,7 @@ const CreateNeed = () => {
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Product</label>
                     <select
-                        {...register("productId", { required: "Product is required" })}
+                        {...register("product", { required: "Product is required" })}
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                     >
                         <option value="">Select a product</option>
@@ -66,25 +66,34 @@ const CreateNeed = () => {
                     </select>
                     {errors.productId && <span className="text-red-500 text-sm">{errors.productId.message}</span>}
                 </div>
+                <div>
+                    <label className="block text-sm font-medium text-gray-700">Start Date</label>
+                    <input
+                        {...register("start_date", { required: "Start date is required" })}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                        type="date"
+                    />
+                    {errors.start_date && <span className="text-red-500 text-sm">{errors.start_date.message}</span>}
+                </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-gray-700">Unit of Measure</label>
+                    <label className="block text-sm font-medium text-gray-700">End Date</label>
                     <input
-                        {...register("unitOfMeasure", { required: "Unit of measure is required" })}
+                        {...register("end_date", { required: "End date is required" })}
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                        type="text"
+                        type="date"
                     />
-                    {errors.unitOfMeasure && <span className="text-red-500 text-sm">{errors.unitOfMeasure.message}</span>}
+                    {errors.end_date && <span className="text-red-500 text-sm">{errors.end_date.message}</span>}
                 </div>
 
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Amount</label>
                     <input
-                        {...register("amount", { required: "Amount is required", min: { value: 1, message: "Amount must be at least 1" } })}
+                        {...register("quantity", { required: "Amount is required", min: { value: 1, message: "Amount must be at least 1" } })}
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                         type="number"
                     />
-                    {errors.amount && <span className="text-red-500 text-sm">{errors.amount.message}</span>}
+                    {errors.quantity && <span className="text-red-500 text-sm">{errors.quantity.message}</span>}
                 </div>
 
                 <button

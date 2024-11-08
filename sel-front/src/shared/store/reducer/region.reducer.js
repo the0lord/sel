@@ -35,7 +35,7 @@ const regionsSlice = createSlice({
         builder
             .addCase(fetchRegionsThunk.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.products = action.payload.results;
+                state.regions = action.payload.results;
                 state.total = action.payload.count;
             })
             .addCase(fetchRegionsThunk.pending, (state) => {
