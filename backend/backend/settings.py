@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'authentication',
     'rest_framework',
     'djoser',
-    'corsheaders'
+    'corsheaders',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -155,3 +156,10 @@ SIMPLE_JWT = {
 }
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+DJOSER = {
+    'SERIALIZERS': {
+        'user': 'authentication.serializers.CustomUserSerializer',  # Path to your custom serializer
+        'current_user': 'authentication.serializers.CustomUserSerializer',  # For the /users/me/ endpoint
+    },
+}

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Product, NeedList, FarmerStack
+from .models import Product, NeedList, FarmerStack, Region
 
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
@@ -14,4 +14,9 @@ class NeedListSerializer(serializers.ModelSerializer):
 class FarmerStackSerializer(serializers.ModelSerializer):
     class Meta:
         model = FarmerStack
+        fields = '__all__'
+
+class RegionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Region
         fields = '__all__'
