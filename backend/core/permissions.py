@@ -22,7 +22,7 @@ class IsStaffOrReadOnly(permissions.BasePermission):
 
 class FarmerStackPermission(permissions.BasePermission):
     def has_permission(self, request, view):
-        if request.user and request.user.role in ['admin', 'manager']:
+        if request.user and request.user.role in ['admin', 'manager'] and request.method in permissions.SAFE_METHODS:
             return True
         
         if request.method in ['GET']:
