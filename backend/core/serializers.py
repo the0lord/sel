@@ -8,7 +8,16 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class RegionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Region
+        fields = '__all__'
+
+
 class NeedListSerializer(serializers.ModelSerializer):
+    product = ProductSerializer(read_only=True)
+    region = RegionSerializer(read_only=True)
+
     class Meta:
         model = NeedList
         fields = '__all__'
@@ -16,12 +25,10 @@ class NeedListSerializer(serializers.ModelSerializer):
 
 class FarmerStackSerializer(serializers.ModelSerializer):
     user_id = serializers.IntegerField(required=False)
+    product = ProductSerializer(read_only=True)
+    region = RegionSerializer(read_only=True)
+
     class Meta:
         model = FarmerStack
         fields = '__all__'
 
-
-class RegionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Region
-        fields = '__all__'
