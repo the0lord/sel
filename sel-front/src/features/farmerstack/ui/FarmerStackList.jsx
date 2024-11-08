@@ -1,28 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchStackThunk } from 'shared/store/reducer/stack.reducer';
 import Table from "shared/ui/dynamic/Table/Table";
-const FarmerStack = () => {
-    const products = [
-        {
-            ID: 1,
-            Name: "hi",
-            UnitOfMeasure: "kg",
-            Amount: "10000"
-        }
-    ]
+const FarmerStackList = () => {
+    const { stack } = useSelector(({ stack }) => stack);
+    const dispatch = useDispatch();
 
-    // const loadPage = (page, pageSize) => {
-    //     dispatch(getOrganizations({ page, pageSize }));
-    // };
+    useEffect(() => {
+        dispatch(fetchStackThunk());
+    }, []);
 
     const columns = [
-        { field: 'ID', headerName: '#', width: 50 },
+        { field: 'id', headerName: '#', width: 50 },
         { field: 'Name', headerName: 'Название культуры', width: 150 },
         { field: 'UnitOfMeasure', headerName: 'Единица измерения', width: 150 },
-        { field: "Amount", headerName: 'Количествo', width: 50}
-    ];
+        { field: 'Amount', headerName: 'Количество', width: 50 },
+    ]
+
+
 
     return <Table
-        data={products}
+        data={stack}
         columns={columns}
         isLoading={false}
         total={2}
@@ -30,4 +28,4 @@ const FarmerStack = () => {
     />;
 };
 
-export default FarmerStack;
+export default FarmerStackList;
