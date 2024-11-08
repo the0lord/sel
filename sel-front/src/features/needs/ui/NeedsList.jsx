@@ -9,7 +9,8 @@ const NeedsList = () => {
         {
             ID: 1,
             Name: "hi",
-            UnitOfMeasure: "kg"
+            UnitOfMeasure: "kg",
+            Amount: 10
         }
     ]
 
@@ -21,6 +22,7 @@ const NeedsList = () => {
         { field: 'ID', headerName: '#', width: 50 },
         { field: 'Name', headerName: 'Название культуры', width: 150 },
         { field: 'UnitOfMeasure', headerName: 'Единица измерения', width: 150 },
+        { field: 'Amount', headerName: 'Количество', width: 50 },
     ];
 
     return <Table
