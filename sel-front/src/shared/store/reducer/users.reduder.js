@@ -13,7 +13,7 @@ export const fetchUsersThunk = createAsyncThunk(
     "users/fetchUsers",
     async (params = { page: 1, pageSize: 10 }, { rejectWithValue }) => {
         const { page, pageSize } = params;
-        const api = `/auth/users?page=${page}&page_size=${pageSize}`;
+        const api = `auth/users?page=${page}&page_size=${pageSize}`;
         try {
             const response = await request(api);
             return response;
@@ -25,10 +25,11 @@ export const fetchUsersThunk = createAsyncThunk(
         }
     }
 );
+
 export const createUserThunk = createAsyncThunk("users/createUser", async (body, { rejectWithValue }) => {
-    const api = "/auth/users";
+    const api = "auth/users";
     try {
-        await axiosInstance.post(api, body);
+        await request(api, { body });
     } catch (error) {
         if (!error.response) {
             throw error
