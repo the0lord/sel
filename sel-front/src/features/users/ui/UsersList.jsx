@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUsersThunk } from 'shared/store/reducer/users.reduder';
 import Table from "shared/ui/dynamic/Table/Table";
+
 const UsersList = () => {
     const { users } = useSelector(({ users }) => users);
     const dispatch = useDispatch();

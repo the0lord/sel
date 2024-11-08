@@ -1,27 +1,23 @@
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProductsThunk } from 'shared/store/reducer/products.reduder';
 import Table from "shared/ui/dynamic/Table/Table";
-
-
 const ProductList = () => {
-    // const dispatch = useDispatch();
-    // const { foundOrganizations, isLoading, error, total } = useSelector(state => state.found);
-    const products = [
-        {
-            ID: 1,
-            Name: "hi",
-            UnitOfMeasure: "kg"
-        }
-    ]
+    const { products } = useSelector(({ products }) => products);
+    console.log(products)
+    const dispatch = useDispatch();
 
-    // const loadPage = (page, pageSize) => {
-    //     dispatch(getOrganizations({ page, pageSize }));
-    // };
+    useEffect(() => {
+        dispatch(fetchProductsThunk());
+    }, []);
 
     const columns = [
-        { field: 'ID', headerName: '#', width: 50 },
+        { field: 'id', headerName: '#', width: 50 },
         { field: 'Name', headerName: 'Название культуры', width: 150 },
         { field: 'UnitOfMeasure', headerName: 'Единица измерения', width: 150 },
-    ];
+    ]
+
+
 
     return <Table
         data={products}
@@ -30,6 +26,6 @@ const ProductList = () => {
         total={2}
         loadPage={(page, pageSize) => { }}
     />;
-}
+};
 
 export default ProductList;

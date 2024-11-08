@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "shared/libs/AxiosInstance";
+import request from "shared/libs/client";
 
 const initialState = {
     products: [],
@@ -9,13 +10,14 @@ const initialState = {
 };
 
 export const fetchProductsThunk = createAsyncThunk(
-    "product/fetchProducts",
+    "products/fetchProducts",
     async (params = { page: 1, pageSize: 10 }, { rejectWithValue }) => {
         const { page, pageSize } = params;
-        const api = `/api/v1/sanction_white_list/person?page=${page}&page_size=${pageSize}`;
+        const api = `/products?page=${page}&page_size=${pageSize}`;
         try {
-            const response = await axiosInstance.get(api);
-            return response.data;
+            const response = await request(api);
+            console.log(response)
+            return response;
         } catch (error) {
             if (!error.response) {
                 throw error;
@@ -24,10 +26,10 @@ export const fetchProductsThunk = createAsyncThunk(
         }
     }
 );
-export const createProductThunk = createAsyncThunk("product/createProduct", async (body, { rejectWithValue }) => {
-    const api = "auth/v1/user/login";
+export const createProductThunk = createAsyncThunk("products/createProduct", async (body, { rejectWithValue }) => {
+    const api = "products";
     try {
-        await axiosInstance.post(api, body);
+        await request(api, { body });
     } catch (error) {
         if (!error.response) {
             throw error
@@ -38,8 +40,8 @@ export const createProductThunk = createAsyncThunk("product/createProduct", asyn
 
 
 
-const whiteListSlice = createSlice({
-    name: "whiteList",
+const productsSlice = createSlice({
+    name: "products",
     initialState,
     reducers: {},
     extraReducers: (builder) => {
@@ -47,8 +49,8 @@ const whiteListSlice = createSlice({
         builder
             .addCase(fetchProductsThunk.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.persons = action.payload.data;
-                state.total = action.payload.total;
+                state.products = action.payload.results;
+                state.total = action.payload.count;
             })
             .addCase(fetchProductsThunk.pending, (state) => {
                 state.isLoading = true;
@@ -63,7 +65,6 @@ const whiteListSlice = createSlice({
         builder
             .addCase(createProductThunk.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.organizations = action.payload.data;
                 state.total = action.payload.total;
             })
             .addCase(createProductThunk.pending, (state) => {
@@ -78,5 +79,5 @@ const whiteListSlice = createSlice({
     },
 });
 
-export default whiteListSlice;
+export default productsSlice;
 
