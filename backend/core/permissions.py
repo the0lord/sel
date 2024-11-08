@@ -25,7 +25,7 @@ class FarmerStackPermission(permissions.BasePermission):
         if request.user and request.user.role in ['admin', 'manager']:
             return True
         
-        if request.method in ['GET', 'DELETE']:
+        if request.method in ['GET']:
             obj = view.get_object()
             
             if obj.user == request.user:

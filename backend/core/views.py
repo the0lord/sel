@@ -18,4 +18,5 @@ class NeedListViewSet(viewsets.ModelViewSet):
 class FarmerStackViewSet(viewsets.ModelViewSet):
     queryset = FarmerStack.objects.all()
     serializer_class = FarmerStackSerializer
+    permission_classes = [FarmerStackPermission]
     
