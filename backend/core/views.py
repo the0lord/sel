@@ -5,6 +5,7 @@ from .models import Product, NeedList, FarmerStack, Region
 from .serializers import ProductSerializer, NeedListSerializer, FarmerStackSerializer, RegionSerializer
 from .permissions import IsAdminOrReadOnly, IsStaffOrReadOnly, FarmerStackPermission
 from django.db.models import Q
+from collections import defaultdict
 
 
 class ProductViewSet(viewsets.ModelViewSet):
@@ -18,6 +19,7 @@ class NeedListViewSet(viewsets.ModelViewSet):
     serializer_class = NeedListSerializer
     permission_classes = [IsAdminOrReadOnly]
 
+
 class FarmerStackViewSet(viewsets.ModelViewSet):
     queryset = FarmerStack.objects.all()
     serializer_class = FarmerStackSerializer
@@ -26,10 +28,12 @@ class FarmerStackViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(user_id=self.request.user)
 
+
 class RegionViewSet(viewsets.ModelViewSet):
     queryset = Region.objects.all()
     serializer_class = RegionSerializer
     permission_classes = [IsAdminOrReadOnly]
+
 
 @api_view(['GET'])
 def get_deficiency(request, need_list_id):
@@ -50,19 +54,21 @@ def get_deficiency(request, need_list_id):
 
 @api_view(['GET'])
 def get_all_deficiencies(request):
-    need_list = NeedList.objects.all()
+    need_lists = NeedList.objects.all()
     farmer_stacks = FarmerStack.objects.all()
-    deficiency = need_list.quantity
-    for farmer_stack in FarmerStack.objects.filter(
-            Q(product=need_list.product) &
-            Q(region=need_list.region) &
+    deficiencies = defaultdict(int)
+    for need_list in need_lists:
+        deficiencies[need_list.id] = need_list.quantity
+    for farmer_stack in farmer_stacks:
+        need_list = need_lists.filter(
+            Q(product=farmer_stack.product) &
+            Q(region=farmer_stack.region) &
             (
-                    Q(delivery_date__lte=need_list.end_date) |  # OR condition 1: Start overlaps
-                    Q(delivery_date__gte=need_list.start_date)  # OR condition 2: End overlaps
+                    Q(delivery_date__lte=farmer_stack.delivery_date) |  # OR condition 1: Start overlaps
+                    Q(delivery_date__gte=farmer_stack.delivery_date)  # OR condition 2: End overlaps
             )
-    ):
-        deficiency -= farmer_stack.quantity
+        ).first()
+        if need_list:
+            deficiencies[need_list.id] -= farmer_stack.quantity
 
-    return Response(deficiency)
-
-    
+    return Response(deficiencies)
