@@ -15,6 +15,7 @@ class NeedList(models.Model):
         return f"{self.product.name} - {self.quantity} {self.product.measurement_unit}"
 
 class FarmerStack(models.Model):
+    user_id = models.Fo
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.FloatField()
     date_added = models.DateField(auto_now_add=True)
