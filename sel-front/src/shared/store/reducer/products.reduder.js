@@ -8,8 +8,8 @@ const initialState = {
     total: 0,
 };
 
-export const fetchProducts = createAsyncThunk(
-    "data/fetchProducts",
+export const fetchProductsThunk = createAsyncThunk(
+    "product/fetchProducts",
     async (params = { page: 1, pageSize: 10 }, { rejectWithValue }) => {
         const { page, pageSize } = params;
         const api = `/api/v1/sanction_white_list/person?page=${page}&page_size=${pageSize}`;
@@ -24,59 +24,53 @@ export const fetchProducts = createAsyncThunk(
         }
     }
 );
-
-export const createProduct = createAsyncThunk(
-    "data/createProduct",
-    async (params = { page: 1, pageSize: 10 }, { rejectWithValue }) => {
-        const { page, pageSize } = params;
-        const api = `/api/v1/sanction_white_list/organization?page=${page}&page_size=${pageSize}`;
-        try {
-            const response = await axiosInstance.post(api);
-            return response.data;
-        } catch (error) {
-            if (!error.response) {
-                throw error;
-            }
-            return rejectWithValue(error.response.data);
+export const createProductThunk = createAsyncThunk("product/createProduct", async (body, { rejectWithValue }) => {
+    const api = "auth/v1/user/login";
+    try {
+        await axiosInstance.post(api, body);
+    } catch (error) {
+        if (!error.response) {
+            throw error
         }
+        return rejectWithValue(error);
     }
-);
+});
+
+
 
 const whiteListSlice = createSlice({
     name: "whiteList",
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        // Fetching Persons
+        // Fetching Products
         builder
-            .addCase(fetchPersons.fulfilled, (state, action) => {
+            .addCase(fetchProductsThunk.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.persons = action.payload.data;
                 state.total = action.payload.total;
-                // console.log('Reducer payload:', action.payload);  // Add this line
             })
-            .addCase(fetchPersons.pending, (state) => {
+            .addCase(fetchProductsThunk.pending, (state) => {
                 state.isLoading = true;
                 state.error = null;
             })
-            .addCase(fetchPersons.rejected, (state, action) => {
+            .addCase(fetchProductsThunk.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
 
             });
-        console.log(initialState.persons, 'array');
         // Fetching Organizations
         builder
-            .addCase(fetchOrganizations.fulfilled, (state, action) => {
+            .addCase(createProductThunk.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.organizations = action.payload.data;
                 state.total = action.payload.total;
             })
-            .addCase(fetchOrganizations.pending, (state) => {
+            .addCase(createProductThunk.pending, (state) => {
                 state.isLoading = true;
                 state.error = null;
             })
-            .addCase(fetchOrganizations.rejected, (state, action) => {
+            .addCase(createProductThunk.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
             });
