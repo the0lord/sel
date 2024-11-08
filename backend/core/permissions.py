@@ -30,5 +30,7 @@ class FarmerStackPermission(permissions.BasePermission):
             
             if obj.user == request.user:
                 return True
-
+        if request.method in ['POST', 'PUT', 'PATCH', 'DELETE'] and request.user:
+            return True
+        
         return False
