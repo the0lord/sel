@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import SidebarItem from './SidebarItem';
-import { ChartBarSquareIcon, HomeIcon, DocumentTextIcon, Bars3Icon, ArchiveBoxArrowDownIcon } from "@heroicons/react/24/solid";
-
-import { UserIcon } from "@heroicons/react/24/outline";
+import { ChartBarSquareIcon, HomeIcon, DocumentTextIcon, Bars3Icon, ArchiveBoxArrowDownIcon, UserIcon, CircleStackIcon, ChartPieIcon } from "@heroicons/react/24/solid";
 import sideBarBtn from 'assets/images/sideBarButton.svg';
 import hamburgerIcon from "assets/images/hamburger.png";
 
@@ -42,7 +40,23 @@ const Sidebar = ({ children }) => {
             icon: <ArchiveBoxArrowDownIcon className='h-5 w-5 font-bold' />,
             label: 'Продукты',
             link: '/products'
+        },
+        {
+            icon: <UserIcon className='h-5 w-5 font-bold' />,
+            label: 'Пользователи',
+            link: '/users'
+        },
+        {
+            icon: <CircleStackIcon className='h-5 w-5 font-bold' />,
+            label: 'Склад',
+            link: '/stack'
+        },
+        {
+            icon: <ChartPieIcon className='h-5 w-5 font-bold' />,
+            label: 'Нужды',
+            link: '/needs'
         }
+
         // {
         //     icon: <ChartBarSquareIcon className='h-5 w-5 font-bold' />,
         //     label: 'Санкции',
