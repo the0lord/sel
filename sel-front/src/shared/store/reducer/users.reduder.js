@@ -27,7 +27,7 @@ export const fetchUsersThunk = createAsyncThunk(
 );
 
 export const createUserThunk = createAsyncThunk("users/createUser", async (body, { rejectWithValue }) => {
-    const api = "auth/users";
+    const api = "auth/users/";
     try {
         await request(api, { body });
     } catch (error) {
