@@ -1,16 +1,28 @@
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { createUserThunk } from "shared/store/reducer/users.reduder";
-
+import { useNavigate } from "react-router-dom";
 const CreateUser = () => {
     const { register, handleSubmit, formState: { errors } } = useForm()
     const dispatch = useDispatch();
     const onSubmit = (data) => {
         dispatch(createUserThunk(data));
     }
+    const navigate = useNavigate();
+    
+    const handleBackClick = () => {
+        navigate("/users")
+        
+    };
 
     return (
         <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
+            <button
+                onClick={handleBackClick}
+                className="mb-4 px-4 py-2 bg-blue-800 text-white  rounded-lg hover:bg-blue-600"
+            >
+                Back to Users
+            </button>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Username</label>
