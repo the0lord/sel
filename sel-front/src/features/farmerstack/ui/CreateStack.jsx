@@ -1,25 +1,37 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
-// import { createStackThunk } from "shared/store/reducer/stacks.reducer";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProductsThunk } from "shared/store/reducer/products.reduder";
+import { createStackThunk } from "shared/store/reducer/stack.reducer";
 
 const CreateStack = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const { products } = useSelector(({ products }) => products);
     const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(fetchProductsThunk({ pageSize: 10 ** 6, page: 1 }));
+    }, [])
     const onSubmit = (data) => {
-        // dispatch(createStackThunk(data));
+        dispatch(createStackThunk(data));
     };
 
     return (
         <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 <div>
-                    <label className="block text-sm font-medium text-gray-700">Stack Name</label>
-                    <input
-                        {...register("name", { required: "Stack name is required" })}
+                    <label className="block text-sm font-medium text-gray-700">Select Product</label>
+                    <select
+                        {...register("productId", { required: "Product selection is required" })}
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                        type="text"
-                    />
-                    {errors.name && <span className="text-red-500 text-sm">{errors.name.message}</span>}
+                    >
+                        <option value="">Select a product</option>
+                        {products?.map((product) => (
+                            <option key={product.id} value={product.id}>
+                                {product.name}
+                            </option>
+                        ))}
+                    </select>
+                    {errors.productId && <span className="text-red-500 text-sm">{errors.productId.message}</span>}
                 </div>
 
                 <div>

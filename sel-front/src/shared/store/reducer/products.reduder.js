@@ -13,7 +13,7 @@ export const fetchProductsThunk = createAsyncThunk(
     "products/fetchProducts",
     async (params = { page: 1, pageSize: 10 }, { rejectWithValue }) => {
         const { page, pageSize } = params;
-        const api = `/products?page=${page}&page_size=${pageSize}`;
+        const api = `products?page=${page}&page_size=${pageSize}`;
         try {
             const response = await request(api);
             return response;

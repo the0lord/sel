@@ -4,13 +4,14 @@ import Loader from 'features/system/Loader';
 import LoginPage from 'page/login/ui/Login';
 import Router from 'page/router';
 import { useDispatch, useSelector } from 'react-redux';
-import { setToken } from 'shared/store/reducer/auth.reducer';
+import { getMeThunk, setToken } from 'shared/store/reducer/auth.reducer';
 
 function RouterProvider() {
     const { token } = useSelector(({ auth }) => auth);
     const dispatch = useDispatch();
 
     useEffect(() => {
+        dispatch(getMeThunk());
         dispatch(setToken(localStorage.getItem("token")));
     }, [token])
 

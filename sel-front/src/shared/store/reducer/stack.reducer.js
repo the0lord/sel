@@ -26,7 +26,7 @@ export const fetchStackThunk = createAsyncThunk(
     }
 );
 export const createStackThunk = createAsyncThunk("needs/createNeed", async (body, { rejectWithValue }) => {
-    const api = "stack";
+    const api = "farmerstacks/";
     try {
         await request(api, { body });
     } catch (error) {
