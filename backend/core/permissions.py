@@ -32,5 +32,5 @@ class FarmerStackPermission(permissions.BasePermission):
                 return True
         if request.method in ['POST', 'PUT', 'PATCH', 'DELETE'] and request.user:
             return True
-        
+
         return False
