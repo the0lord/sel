@@ -1,0 +1,16 @@
+version: '3.7'
+
+services:
+
+  his-front:
+    container_name: his-front 
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.dev
+    volumes:
+      - '.:/app'
+      - '/app/node_modules'
+    ports:
+      - 3001:5173
+    environment:
+      - CHOKIDAR_USEPOLLING=true

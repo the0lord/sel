@@ -1,0 +1,12 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "bracketSpacing": true,
+  "singleAttributePerLine": true,
+  "tabWidth": 2,
+  "plugins": [
+    "prettier-plugin-tailwindcss"
+  ]
+}

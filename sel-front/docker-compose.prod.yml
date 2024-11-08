@@ -1,0 +1,10 @@
+version: '3.7'
+
+services:
+  gateway_front_front:
+    container_name: gateway_front
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.prod
+    ports:
+      - '82:82'
