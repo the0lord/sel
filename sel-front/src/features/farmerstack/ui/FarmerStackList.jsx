@@ -11,6 +11,7 @@ const FarmerStackList = () => {
     }, []);
 
     const columns = [
+        
         { field: 'id', headerName: '#', width: 50 },
         { field: 'Name', headerName: 'Название культуры', width: 150 },
         { field: 'UnitOfMeasure', headerName: 'Единица измерения', width: 150 },
