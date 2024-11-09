@@ -54,21 +54,22 @@ def get_deficiency(request, need_list_id):
 
 @api_view(['GET'])
 def get_all_deficiencies(request):
-    need_lists = NeedList.objects.all()
-    farmer_stacks = FarmerStack.objects.all()
-    deficiencies = defaultdict(int)
-    for need_list in need_lists:
-        deficiencies[need_list.id] = need_list.quantity
-    for farmer_stack in farmer_stacks:
-        need_list = need_lists.filter(
-            Q(product=farmer_stack.product) &
-            Q(region=farmer_stack.region) &
-            (
-                    Q(delivery_date__lte=farmer_stack.delivery_date) |  # OR condition 1: Start overlaps
-                    Q(delivery_date__gte=farmer_stack.delivery_date)  # OR condition 2: End overlaps
-            )
-        ).first()
-        if need_list:
-            deficiencies[need_list.id] -= farmer_stack.quantity
-
-    return Response(deficiencies)
+    # need_lists = NeedList.objects.all()
+    # farmer_stacks = FarmerStack.objects.all()
+    # deficiencies = defaultdict(int)
+    # for need_list in need_lists:
+    #     deficiencies[need_list.id] = need_list.quantity
+    # for farmer_stack in farmer_stacks:
+    #     need_list = need_lists.filter(
+    #         Q(product=farmer_stack.product) &
+    #         Q(region=farmer_stack.region) &
+    #         (
+    #                 Q(delivery_date__lte=farmer_stack.delivery_date) |  # OR condition 1: Start overlaps
+    #                 Q(delivery_date__gte=farmer_stack.delivery_date)  # OR condition 2: End overlaps
+    #         )
+    #     ).first()
+    #     if need_list:
+    #         deficiencies[need_list.id] -= farmer_stack.quantity
+    #
+    # return Response(deficiencies)
+    return
