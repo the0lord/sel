@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Product, NeedList, FarmerStack, Region
+from authentication.serializers import CustomUserSerializer
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -43,7 +44,7 @@ class NeedListSerializer(serializers.ModelSerializer):
 
 
 class FarmerStackSerializer(serializers.ModelSerializer):
-    user_id = serializers.IntegerField(required=False)
+    user_id = CustomUserSerializer(read_only=True)
     product = ProductSerializer(required=False)
     region = RegionSerializer(required=False)
     product_id = serializers.IntegerField(required=False)
