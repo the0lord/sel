@@ -8,6 +8,8 @@
  #python manage.py makemigrations
  #python manage.py migrate
  #python manage.py createsuperuser
+
+
 Запуск фронтенда в папке sel-front:
 1. docker compose -f docker-compose.prod.yml up --build -d
    
