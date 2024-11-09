@@ -34,25 +34,6 @@ class NeedList(models.Model):
         return f"{self.product.name} - {self.quantity} {self.product.measurement_unit}"
 
 
-@receiver(pre_save, sender=NeedList)
-def pre_save_collision_check(sender, instance, **kwargs):
-    # Check for overlapping date ranges in the same region and product using OR condition
-    overlapping_entries = NeedList.objects.filter(
-        Q(product=instance.product) &
-        Q(region=instance.region) &
-        (
-                Q(start_date__lte=instance.end_date) |  # OR condition 1: Start overlaps
-                Q(end_date__gte=instance.start_date)  # OR condition 2: End overlaps
-        )
-    ).exclude(id=instance.id)  # Exclude the current instance (important during updates)
-
-    if overlapping_entries.exists():
-        raise ValidationError(
-            f"An entry for {instance.product.name} in region {instance.region.name} "
-            f"overlaps with the date range {instance.start_date} to {instance.end_date}."
-        )
-
-
 class FarmerStack(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
