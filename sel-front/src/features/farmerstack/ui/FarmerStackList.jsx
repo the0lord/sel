@@ -11,11 +11,11 @@ const FarmerStackList = () => {
     }, []);
 
     const columns = [
-        
+
         { field: 'id', headerName: '#', width: 50 },
-        { field: 'Name', headerName: 'Название культуры', width: 150 },
-        { field: 'UnitOfMeasure', headerName: 'Единица измерения', width: 150 },
-        { field: 'Amount', headerName: 'Количество', width: 50 },
+        { field: 'product.name', headerName: 'Название культуры', width: 150 },
+        { field: 'product.measurement_unit', headerName: 'Единица измерения', width: 150 },
+        { field: 'quantity', headerName: 'Количество', width: 50 },
     ]
 
 

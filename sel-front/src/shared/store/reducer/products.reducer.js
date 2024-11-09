@@ -29,6 +29,7 @@ export const createProductThunk = createAsyncThunk("products/createProduct", asy
     const api = "products/";
     try {
         await request(api, { body });
+        window.history.back();
     } catch (error) {
         if (!error.response) {
             throw error

@@ -13,7 +13,7 @@ export const fetchStackThunk = createAsyncThunk(
     "stack/fetchStack",
     async (params = { page: 1, pageSize: 10 }, { rejectWithValue }) => {
         const { page, pageSize } = params;
-        const api = `/stack?page=${page}&page_size=${pageSize}`;
+        const api = `/farmerstacks?page=${page}&page_size=${pageSize}`;
         try {
             const response = await request(api);
             return response;
@@ -25,10 +25,12 @@ export const fetchStackThunk = createAsyncThunk(
         }
     }
 );
-export const createStackThunk = createAsyncThunk("needs/createNeed", async (body, { rejectWithValue }) => {
+
+export const createStackThunk = createAsyncThunk("stack/createStack", async (body, { rejectWithValue }) => {
     const api = "farmerstacks/";
     try {
         await request(api, { body });
+        window.history.back();
     } catch (error) {
         if (!error.response) {
             throw error

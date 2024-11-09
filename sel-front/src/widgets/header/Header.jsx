@@ -8,7 +8,7 @@ const Header = ({ children }) => {
             <div className="flex container">
                 <a className="navbar-brand" href="/">
                     <img width="30" height="45" alt="company logo" src={logo} />
-                    <span>gateway</span>
+                    <span>сель</span>
                 </a>
                 <div className={'inline-block show'} >
                     <ul className="col-auto">

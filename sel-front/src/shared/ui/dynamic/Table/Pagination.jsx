@@ -39,7 +39,6 @@ const Pagination = ({ totalPages, currentPage, onPageChange }) => {
     React.useEffect(() => {
         updateVisiblePages(currentPage, totalPages);
     }, [currentPage, totalPages]);
-
     return (
         <div className="flex pt-5 space-x-1 text-gray-700 select-none">
             <button

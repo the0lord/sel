@@ -14,11 +14,13 @@ const CreateNeed = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        dispatch(fetchRegionsThunk());
-        dispatch(fetchProductsThunk());
+        dispatch(fetchRegionsThunk({ pageSize: 10 ** 6, page: 1 }));
+        dispatch(fetchProductsThunk({ pageSize: 10 ** 6, page: 1 }));
     }, [dispatch]);
 
     const onSubmit = (data) => {
+        if (data.product)
+            data.product = +data.product
         dispatch(createNeedThunk(data));
     };
 
@@ -38,7 +40,7 @@ const CreateNeed = () => {
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Region</label>
                     <select
-                        {...register("region", { required: "Region is required" })}
+                        {...register("region_id", { required: "Region is required" })}
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                     >
                         <option value="">Select a region</option>
@@ -48,13 +50,13 @@ const CreateNeed = () => {
                             </option>
                         ))}
                     </select>
-                    {errors.regionId && <span className="text-red-500 text-sm">{errors.regionId.message}</span>}
+                    {errors.region_id && <span className="text-red-500 text-sm">{errors.region_id.message}</span>}
                 </div>
 
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Product</label>
                     <select
-                        {...register("product", { required: "Product is required" })}
+                        {...register("product_id", { required: "Product is required" })}
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                     >
                         <option value="">Select a product</option>
@@ -64,7 +66,7 @@ const CreateNeed = () => {
                             </option>
                         ))}
                     </select>
-                    {errors.productId && <span className="text-red-500 text-sm">{errors.productId.message}</span>}
+                    {errors.product_id && <span className="text-red-500 text-sm">{errors.product_id.message}</span>}
                 </div>
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Start Date</label>

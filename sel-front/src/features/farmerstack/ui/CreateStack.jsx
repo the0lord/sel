@@ -1,26 +1,33 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProductsThunk } from "shared/store/reducer/products.reduder";
-import { createStackThunk } from "shared/store/reducer/stack.reducer";
 import { useNavigate } from "react-router-dom";
+import { fetchProductsThunk } from "shared/store/reducer/products.reducer";
+import { fetchRegionsThunk } from "shared/store/reducer/region.reducer";
+import { createStackThunk } from "shared/store/reducer/stack.reducer";
 // import { createStackThunk } from "shared/store/reducer/stacks.reducer";
 
 const CreateStack = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { products } = useSelector(({ products }) => products);
+    const { regions } = useSelector(({ regions }) => regions);
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(fetchProductsThunk({ pageSize: 10 ** 6, page: 1 }));
+        dispatch(fetchRegionsThunk({ pageSize: 10 ** 6, page: 1 }))
     }, [])
     const navigate = useNavigate(); // Hook to navigate between pages
 
     const onSubmit = (data) => {
+        if (data.product_id)
+            data.product_id = +data.product_id
+        if (data.region_id)
+            data.region_id = +data.region_id
         dispatch(createStackThunk(data));
     };
 
     const handleBackClick = () => {
-        navigate("/stack"); 
+        navigate("/stack");
     };
 
     return (
@@ -33,9 +40,25 @@ const CreateStack = () => {
             </button>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 <div>
-                    <label className="block text-sm font-medium text-gray-700">Select Product</label>
+                    <label className="block text-sm font-medium text-gray-700">Region</label>
                     <select
-                        {...register("productId", { required: "Product selection is required" })}
+                        {...register("region_id", { required: "Region is required" })}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                    >
+                        <option value="">Select a region</option>
+                        {regions?.map((region) => (
+                            <option key={region.id} value={region.id}>
+                                {region.name}
+                            </option>
+                        ))}
+                    </select>
+                    {errors.regionId && <span className="text-red-500 text-sm">{errors.regionId.message}</span>}
+                </div>
+
+                <div>
+                    <label className="block text-sm font-medium text-gray-700">Product</label>
+                    <select
+                        {...register("product_id", { required: "Product is required" })}
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                     >
                         <option value="">Select a product</option>
@@ -45,27 +68,28 @@ const CreateStack = () => {
                             </option>
                         ))}
                     </select>
-                    {errors.productId && <span className="text-red-500 text-sm">{errors.productId.message}</span>}
+                    {errors.product_id && <span className="text-red-500 text-sm">{errors.product_id.message}</span>}
+                </div>
+                <div>
+                    <label className="block text-sm font-medium text-gray-700">Delivery Date</label>
+                    <input
+                        {...register("delivery_date", { required: "Start date is required" })}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                        type="date"
+                    />
+                    {errors.delivery_date && <span className="text-red-500 text-sm">{errors.delivery_date.message}</span>}
                 </div>
 
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">Unit of Measure</label>
-                    <input
-                        {...register("unitOfMeasure", { required: "Unit of measure is required" })}
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                        type="text"
-                    />
-                    {errors.unitOfMeasure && <span className="text-red-500 text-sm">{errors.unitOfMeasure.message}</span>}
-                </div>
+
 
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Amount</label>
                     <input
-                        {...register("amount", { required: "Amount is required", min: { value: 1, message: "Amount must be at least 1" } })}
+                        {...register("quantity", { required: "Amount is required", min: { value: 1, message: "Amount must be at least 1" } })}
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                         type="number"
                     />
-                    {errors.amount && <span className="text-red-500 text-sm">{errors.amount.message}</span>}
+                    {errors.quantity && <span className="text-red-500 text-sm">{errors.quantity.message}</span>}
                 </div>
 
                 <button

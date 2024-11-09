@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Pagination from './Pagination';
 
-const Table = ({ data, columns, total, loadPage }) => {
+const Table = ({ data, columns, total, loadPage, onClick = () => { } }) => {
     const [{ page, pageSize }, setPagination] = useState({
         page: 1,
         pageSize: 10
@@ -34,6 +34,7 @@ const Table = ({ data, columns, total, loadPage }) => {
                     <tbody>
                         {data.map((row, index) => (
                             <tr
+                                onClick={() => onClick(row)}
                                 key={`row-${index}`}
                                 className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100"
                             >
@@ -42,12 +43,12 @@ const Table = ({ data, columns, total, loadPage }) => {
                                         key={`${row.id}-${column.field}`}
                                         className="px-6 py-4 text-sm font-medium text-gray-900 whitespace-normal"
                                     >
-                                        {row[column.field] || ''}
+                                        {column.field.includes('.') ? column.field.split('.').reduce((obj, key) => obj?.[key], row) || '' : row[column.field] || ''}
                                     </td>
                                 ))}
                             </tr>
                         ))}
-                        
+
                     </tbody>
                 </table>
             </div>

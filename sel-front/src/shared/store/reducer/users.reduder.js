@@ -30,6 +30,7 @@ export const createUserThunk = createAsyncThunk("users/createUser", async (body,
     const api = "auth/users/";
     try {
         await request(api, { body });
+        window.history.back();
     } catch (error) {
         if (!error.response) {
             throw error

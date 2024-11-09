@@ -7,6 +7,7 @@ const initialState = {
     error: null,
     isLoading: false,
     total: 0,
+    score: 0,
 };
 
 export const fetchNeedsThunk = createAsyncThunk(
@@ -25,10 +26,30 @@ export const fetchNeedsThunk = createAsyncThunk(
         }
     }
 );
+
+export const fetchLeftThunk = createAsyncThunk(
+    "needs/fetchLeftThunk",
+    async (id, { rejectWithValue }) => {
+        const api = `get_deficiency/${id}`;
+        try {
+            const response = await request(api);
+            return response;
+        } catch (error) {
+            if (!error.response) {
+                throw error;
+            }
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
+
+
+
 export const createNeedThunk = createAsyncThunk("needs/createNeed", async (body, { rejectWithValue }) => {
     const api = "needlists/";
     try {
         await request(api, { body });
+        window.history.back();
     } catch (error) {
         if (!error.response) {
             throw error
@@ -75,6 +96,20 @@ const needsSlice = createSlice({
                 state.error = action.payload;
             });
         // console.log(initialState.persons, 'array');
+        builder
+            .addCase(fetchLeftThunk.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.score = action.payload;
+            })
+            .addCase(fetchLeftThunk.pending, (state) => {
+                state.isLoading = true;
+                state.error = null;
+            })
+            .addCase(fetchLeftThunk.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload;
+            });
+
     },
 });
 
